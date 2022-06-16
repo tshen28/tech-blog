@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <title>The Tech Blog</title>
+</head>
+
+<body>
+    <header class="container-fluid bg-danger">
+        <div class="row">
+            <h1 class="col">The Tech Blog</h1>
+            <div class="col text-end">
+                {{#if loggedIn}}
+                <h2>Welcome, {{username}}</h2>
+                <a href="/">Home</a>
+                <a href="/profile">Dashboard</a>
+                <a href="/api/users/logout">Logout</a>
+                {{else}}
+                <a href="/">Home</a>
+                <a href="/login">Login</a>
+                {{/if}}
+            </div>
+        </div>
+    </header>
+    <main>
+        {{{body}}}
+    </main>
+</body>
+
+</html>

@@ -5,6 +5,12 @@ class Blog extends Model {}
 
 Blog.init(
     {
+        id: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            primaryKey: true,
+            autoIncrement: true,
+        },
         title: {
             type: DataTypes.STRING,
             allowNull: false,
@@ -12,7 +18,12 @@ Blog.init(
         body: {
             type: DataTypes.TEXT,
             allowNull: false,
-        }
+        },
+        date_created: {
+            type: DataTypes.DATE,
+            allowNull: false,
+            defaultValue: DataTypes.NOW,
+        },
     },
     {
         sequelize,
