@@ -1,3 +1,4 @@
+const path = require('path');
 const express = require("express");
 const exphbs = require("express-handlebars");
 const routes = require("./controllers");
@@ -24,7 +25,7 @@ const sess = {
 };
 app.use(session(sess));
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, 'public')));
 
 const hbs = exphbs.create({ helpers });
 app.engine('handlebars', hbs.engine);

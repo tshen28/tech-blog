@@ -15,6 +15,19 @@ router.post('/', withAuth, async (req, res) => {
     }
 });
 
+router.get('/:id', withAuth, async(req, res) => {
+    try {
+        const findBlog = await Blog.findOne({
+            where: {
+                id: req.params.id
+            },
+        });
+        res.status(200).json(findBlog);
+    } catch (err) {
+        res.status(500).json(err);
+    }
+})
+
 router.put('/:id', withAuth, async (req, res) => {
     try {
         const editBlog = await Blog.update(req.body, {
@@ -35,24 +48,18 @@ router.put('/:id', withAuth, async (req, res) => {
     }
 })
 
-router.delete('/:id', withAuth, async (req, res) => {
-    try {
-        const blogData = await Blog.destroy({
-            where: {
-                id: req.params.id,
-                user_id: req.session.user_id,
-            },
-        });
-
-        if (!blogData) {
-            res.status(404).json({ message: 'No blog found with this id!' });
-            return;
-        }
-
-        res.status(200).json(blogData);
-    } catch (err) {
-        res.status(500).json(err);
-    }
-});
+router.delete("/:id", (req, res) => {
+    Blog.destroy({
+      where: {
+        id: req.params.id
+      }
+    }).then(deleteBlog => {
+      res.json(deleteBlog);
+    })
+    .catch(err => {
+      console.log(err);
+      res.status(500).json({ msg: "An error occured", err });
+    });
+  });
 
 module.exports = router;
