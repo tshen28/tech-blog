@@ -1,0 +1,13 @@
+<h2>{{title}}</h2>
+<p>{{body}}</p>
+<p>Blog posted by: {{User.username}} on {{date_created}}</p>
+{{#each Comments}}
+    <p>{{comment}}</p>
+    <p>Posted by: {{User.username}} on {{date_created}}</p>
+{{/each}}
+<form id="addComment" class="form-control">
+    <textarea id="comment" rows="10" blogId={{id}} placeholder="Add Comment..."></textarea>
+    <button class="btn btn-info">Comment</button>
+</form>
+
+<script src="/public/js/blog.js"></script>
