@@ -1,32 +1,34 @@
 const router = require('express').Router();
 const { Blog } = require('../../models');
-const withAuth = require('../../utils/auth');
 
-router.post('/', withAuth, async (req, res) => {
-    try {
-        const newBlog = await Blog.create({
-            ...req.body,
-            user_id: req.session.user_id,
-        });
-
-        res.status(200).json(newBlog);
-    } catch (err) {
-        res.status(400).json(err);
-    }
+router.post("/", (req, res) => {
+    if(!req.session.user){
+      return res.status(401).json({msg:"Login to create blog."})
+  }
+    Blog.create({
+      title:req.body.title,
+      body:req.body.body,
+      UserId:req.session.user.id
+    })
+      .then(newBlog => {
+        res.json(newBlog);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({ msg: "An error occured", err });
+      });
 });
 
-router.get('/:id', withAuth, async(req, res) => {
-    try {
-        const findBlog = await Blog.findOne({
-            where: {
-                id: req.params.id
-            },
-        });
-        res.status(200).json(findBlog);
-    } catch (err) {
-        res.status(500).json(err);
-    }
-})
+router.get("/:id", (req, res) => {
+    Blog.findByPk(req.params.id,{})
+      .then(dbBlog => {
+        res.json(dbBlog);
+      })
+      .catch(err => {
+        console.log(err);
+        res.status(500).json({ msg: "An error occured", err });
+      });
+});
 
 router.put('/:id', withAuth, async (req, res) => {
     try {

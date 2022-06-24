@@ -1,47 +1,36 @@
-const newFormHandler = async (event) => {
-    event.preventDefault();
-  
-    const title = document.querySelector('#blog-title').value.trim();
-    const body = document.querySelector('#blog-body').value.trim();
-  
-    if (title && body) {
-      const response = await fetch(`/api/blogs`, {
-        method: 'POST',
-        body: JSON.stringify({ title, body }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
-  
-      if (response.ok) {
-        document.location.replace('/profile');
-      } else {
-        alert('Failed to create blog');
+console.log("linked");
+document.querySelector("#new-blog").addEventListener("submit", e => {
+  e.preventDefault()
+  const newBlog = {
+      title: document.querySelector("#blog-title").value,
+      body: document.querySelector("#blog-body").value,
+  }
+  fetch("/api/blogs", {
+      method: "POST",
+      body: JSON.stringify(newBlog),
+      headers: {
+          "Content-Type": "application/json"
       }
-    }
-  };
-  
-  const delButtonHandler = async (event) => {
-    if (event.target.hasAttribute('blog-id')) {
-      const id = event.target.getAttribute('blog-id');
-  
-      const response = await fetch(`/api/blogs/${id}`, {
-        method: 'DELETE',
-      });
-  
-      if (response.ok) {
-        document.location.replace('/profile');
+  }).then(res => {
+      if (res.ok) {
+          document.location.reload()
       } else {
-        alert('Failed to delete blog');
+          alert("Post failed.")
       }
-    }
-  };
-  
-  document
-    .querySelector('.new-blog-form')
-    .addEventListener('submit', newFormHandler);
-  
-  document
-    .querySelector('.blog-list')
-    .addEventListener('click', delButtonHandler);
-  
+  })
+});
+
+const deleteBtn = document.querySelectorAll(".deleteBtn")
+for (const button of deleteBtn){
+  button.addEventListener("click", e => {
+    fetch(`/api/blogs/${e.target.value}`, {
+      method: "DELETE"
+    }).then(res => {
+      if (res.ok) {
+        document.location.reload();
+      } else {
+        alert(res.statusText);
+      }
+    })
+  })
+}

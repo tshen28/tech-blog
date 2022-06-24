@@ -1,9 +1,9 @@
 <h2>{{title}}</h2>
 <p>{{body}}</p>
-<p>Blog posted by: {{User.name}} on {{date_created}}</p>
+<p>Blog posted by: {{User.username}} on {{date_created}}</p>
 {{#each Comments}}
     <p>{{comment}}</p>
-    <p>Posted by: {{User.name}} on {{date_created}}</p>
+    <p>Posted by: {{User.username}} on {{date_created}}</p>
 {{/each}}
 <form id="addComment" class="form-control">
     <textarea id="comment" rows="10" blogId={{id}} placeholder="Add Comment..."></textarea>
