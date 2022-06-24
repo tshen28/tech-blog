@@ -9,7 +9,7 @@ router.get("/", (req, res) => {
       const mainBlogs = blogs.map(blog => blog.get({ plain: true }))
       console.log("==========")
       const loggedIn = req.session.user ? true : false
-      res.render("/", { blogs: mainBlogs, loggedIn, username: req.session.user?.username })
+      res.render("homepage", { blogs: mainBlogs, loggedIn, username: req.session.user?.username })
   })
 })
 
