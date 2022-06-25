@@ -5,15 +5,13 @@ router.get("/", (req, res) => {
   Blog.findAll({
       include: User
   }).then(blogs => {
-      console.log(blogs)
       const mainBlogs = blogs.map(blog => blog.get({ plain: true }))
-      console.log("==========")
       const loggedIn = req.session.user ? true : false
       res.render("homepage", { blogs: mainBlogs, loggedIn, username: req.session.user?.username })
   })
 })
 
-router.get("/blogpost/:id", (req, res) => {
+router.get("/blogs/:id", (req, res) => {
   Blog.findByPk(req.params.id, {
       include: [{
           model: Comment,

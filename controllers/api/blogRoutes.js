@@ -20,7 +20,11 @@ router.post("/", (req, res) => {
 });
 
 router.get("/:id", (req, res) => {
-    Blog.findByPk(req.params.id,{})
+    Blog.findByPk(req.params.id, {
+      where: {
+        id: req.params.id
+      }
+    })
       .then(dbBlog => {
         res.json(dbBlog);
       })
